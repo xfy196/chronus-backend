@@ -15,10 +15,14 @@ class BookController extends Controller {
     this.ctx.body = res;
   }
   async update() {
-    const { id } = this.ctx.query;
     const book = this.ctx.request.body;
     let res = await this.ctx.service.book.updateBook(book);
     this.ctx.body = res;
+  }
+  async destroy(){
+    const {id} = this.ctx.params
+    let res = await this.ctx.service.book.deleteBookById(id)
+    this.ctx.body = res
   }
 }
 module.exports = BookController;

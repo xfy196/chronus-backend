@@ -61,5 +61,23 @@ class BookService extends Service {
       errorData(500, error.message, "服务器错误");
     }
   }
+
+  /**
+   * 根据id删除这个目标
+   * @param {*} id 
+   */
+  async deleteBookById(id){
+    try {
+      let res = this.ctx.model.Book.destroy({
+        where: {
+          id
+        }
+      })
+      return successData(res ? 200: 500, res, res ? "删除成功": "删除失败")
+    } catch (error) {
+      errorData(500, error.message, "服务器错误");
+      
+    }
+  }
 }
 module.exports = BookService;

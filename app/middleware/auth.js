@@ -13,7 +13,7 @@ module.exports = (options, app) => {
           // 这边需要验证时间是否已经失效了 失效了，提示用户重新登录， 没有失效放行走后续操作
           // 拿到data中的id去查询用户信息中的session_key_time
           const user = await ctx.service.user.findUserById(data.id);
-          if (user.sessionKeyTime < Date.now()) {
+          if (user.data.sessionKeyTime < Date.now()) {
             // 登录失效了
             ctx.status = 401;
             ctx.body = {
@@ -22,8 +22,8 @@ module.exports = (options, app) => {
             };
           } else {
             // 登录未失效 去更新session_key_time
-            ctx.session.user = user;
-            let res = await ctx.service.updateUserInfo({
+            ctx.session.user = user.data;
+            let res = await ctx.service.user.updateUserInfo({
               sessionKeyTime: Date.now() + 7 * 24 * 60 * 60 * 1000,
             });
             ctx.status = 200;
@@ -34,6 +34,7 @@ module.exports = (options, app) => {
             await next();
           }
         } catch (error) {
+          console.log(error)
           ctx.status = 401;
           ctx.body = {
             code: 401,

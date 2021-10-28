@@ -12,7 +12,8 @@ class UserService extends Service {
       if (token) {
         let { id } = await verify(token);
         let res = await this.ctx.service.user.findUserById(id);
-        if (res.code === 200 && res.data.sessionKeyTime >= Date.now()) {
+        // && res.data.sessionKeyTime >= Date.now()
+        if (res.code === 200) {
           // 如果能查到说明这个用户存在的不过我们需要更新sessionKeyTime
           let sessionKeyTime = Date.now() + 7 * 24 * 60 * 60 * 1000;
           let res = await this.updateUserInfo({
