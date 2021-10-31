@@ -8,10 +8,11 @@ class UserController extends Controller {
     this.ctx.body = res;
   }
   // 保存用户信息
-  async create() {}
+  async create() {
+  }
   async update() {
     const {encryptedData, iv } = this.ctx.request.body
-    let res = await this.ctx.service.user.updateUserInfo(encryptedData, iv );
+    let res = await this.ctx.service.user.updateUserInfo({encryptedData, iv });
     this.ctx.body = res;
   }
   async show() {

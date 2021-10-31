@@ -16,6 +16,7 @@ module.exports = (app) => {
       avatarUrl: { type: STRING },
       unionId: { type: STRING },
       timestamp: { type: DATE },
+      userId: {type: STRING},
       sessionKeyTime: {type: DATE,
         get () {
           // console.log(this.getDataValue('created_time'))

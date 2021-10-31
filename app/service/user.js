@@ -1,6 +1,7 @@
 const { Service } = require("egg");
 const { appId, secret } = require("../../config/mini.config");
 const { sign, successData, errorData, verify } = require("../utils");
+const {v4 : uuidv4} = require("uuid")
 const WXBizDataCrypt = require("../utils/WXBizDataCrypt");
 
 class UserService extends Service {
@@ -104,8 +105,8 @@ class UserService extends Service {
     try {
       let user = null;
       let token = this.ctx.get("Authorization");
-      let { session_key, id } = await verify(token);
-      if (sessionKeyTime) {
+      let { session_key, id, user_id } = await verify(token);
+      if (sessionKeyTime && !user_id) {
         user = await this.ctx.model.User.update(
           {
             sessionKeyTime,
@@ -116,12 +117,12 @@ class UserService extends Service {
             },
           }
         );
-      } else {
+      } else if( encryptedData && iv && !user_id) {
         var pc = new WXBizDataCrypt(appId, session_key);
-
         const userData = pc.decryptData(encryptedData, iv);
         userData.sessionKeyTime = Date.now() + 7 * 24 * 60 * 60 * 1000;
         userData.timestamp = userData.watermark.timestamp;
+        userData.userId = uuidv4()
         delete userData.watermark;
         user = await this.ctx.model.User.update(
           {
