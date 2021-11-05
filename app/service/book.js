@@ -1,4 +1,5 @@
 const { Service } = require("egg");
+const user = require("../model/user");
 const { successData, errorData } = require("../utils");
 
 class BookService extends Service {
@@ -84,6 +85,39 @@ class BookService extends Service {
       return successData(res ? 200 : 500, res, res ? "删除成功" : "删除失败");
     } catch (error) {
       errorData(500, error.message, "服务器错误");
+    }
+  }
+  // 小程序获取树相关的信息
+  async getBookById(id){
+    try {
+      let book = await this.ctx.model.Book.findOne({
+        where: {
+          id
+        }
+      })
+      let record = await this.ctx.model.Record.findOne({
+        where: {
+          b_id: id
+        }
+      })
+      let totalTime = 0
+      let highTime = 0
+      for(let i = 0; i < record.length; i++){
+        if(record[i].time > highTime){
+          highTime = record[i].time
+        }
+        totalTime += record[i].time
+      }
+      book.dataValues.totalTime = totalTime,
+      book.dataValues.highTime = highTime
+      this.ctx.status = 200
+      if(book){
+       return successData(200, book, "查询成功")
+      }
+      return errorData(500, book, "查无此人")
+    } catch (error) {
+      this.ctx.status = 500
+      return errorData(500, error, "服务器错误")
     }
   }
 }

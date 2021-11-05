@@ -22,7 +22,13 @@ class RecordService extends Service {
   async getRecordsByBId(pageSize = 10, pageIndex = 1, noPage = false, b_id) {
     try {
       let records = null;
+      let book = null
       if (noPage) {
+        book = this.ctx.model.Book.findOne({
+          where: {
+            id: b_id
+          }
+        })
         records = await this.ctx.model.Record.findAll({ where: { b_id } });
       } else {
         records = await this.ctx.model.Record.findAll({

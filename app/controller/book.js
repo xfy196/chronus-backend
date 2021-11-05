@@ -14,6 +14,11 @@ class BookController extends Controller {
     let res = await this.ctx.service.book.addBook(book);
     this.ctx.body = res;
   }
+  async show(){
+    const {id} = this.ctx.params 
+    let res = await this.service.book.getBookById(id)
+    this.ctx.body = res
+  }
   async update() {
     const book = this.ctx.request.body;
     let res = await this.ctx.service.book.updateBook(book);

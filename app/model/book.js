@@ -1,12 +1,13 @@
 const { DataTypes } = require("sequelize");
 module.exports = (app) => {
-  const { INTEGER, STRING} = DataTypes;
+  const { INTEGER, STRING, DATE} = DataTypes;
   const Book = app.model.define(
     "books",
     {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       name: { type: STRING },
       u_id: {type: INTEGER},
+      last_record_time: {type: DATE}
     },
     {
       freezeTableName: true,

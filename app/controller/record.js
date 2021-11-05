@@ -9,16 +9,17 @@ class RecordController extends Controller {
   async getRecordsByBId() {
     const { pageSize, pageIndex, bId } = this.ctx.query;
     let noPage = false;
-    if (pageSize && pageIndex) {
+    if (!(pageSize && pageIndex)) {
       noPage = true;
     }
-    let res = await this.ctx.service.record.getRecordsByBId(
+    // 目标数据
+    let records = await this.ctx.service.record.getRecordsByBId(
       pageSize,
       pageIndex,
       noPage,
       bId
     );
-    this.ctx.body = res;
+    this.ctx.body = records;
   }
   async getTotals(){
    let res = await this.service.record.getRecordTotal() 
