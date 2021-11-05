@@ -12,11 +12,23 @@ class BookService extends Service {
     try {
       let user = this.ctx.session.user;
       let res = null;
+      let pAll = [];
       if (noPage) {
-        res = await user.findAll({ where: { u_id: user.id } });
+        res = await this.ctx.model.Book.findAll({ where: { u_id: user.id } });
+        for (let i = 0; i < res.length; i++) {
+          res[i].dataValues.totalTime = 0;
+          let r = await this.ctx.model.Record.findAll({
+            where: { b_id: res[i].id },
+          });
+          if (r) {
+            r.forEach((item) => {
+              res[i].dataValues.totalTime += item.time;
+            });
+          }
+        }
       } else {
-        res = await user.findAll({
-          where: { id: user.id },
+        res = await this.ctx.model.Book.findAll({
+          where: { u_id: user.id },
           limit: pageSize,
           offset: (pageIndex - 1) * pageSize,
         });
@@ -38,13 +50,9 @@ class BookService extends Service {
         ...book,
         u_id: user.id,
       });
-      return successData(
-        res ? 200 : 500,
-        res,
-        res ? "创建成功" : "创建失败"
-      );
+      return successData(res ? 200 : 500, res, res ? "创建成功" : "创建失败");
     } catch (error) {
-        console.log(error)
+      console.log(error);
       errorData(500, error.message, "服务错误");
     }
   }
@@ -55,8 +63,8 @@ class BookService extends Service {
    */
   async updateBook(book) {
     try {
-        let res = this.ctx.model.Book.update(book)
-        return successData(res ? 200: 500, res, res? "修改成功": "修改失败")
+      let res = this.ctx.model.Book.update(book);
+      return successData(res ? 200 : 500, res, res ? "修改成功" : "修改失败");
     } catch (error) {
       errorData(500, error.message, "服务器错误");
     }
@@ -64,19 +72,18 @@ class BookService extends Service {
 
   /**
    * 根据id删除这个目标
-   * @param {*} id 
+   * @param {*} id
    */
-  async deleteBookById(id){
+  async deleteBookById(id) {
     try {
       let res = this.ctx.model.Book.destroy({
         where: {
-          id
-        }
-      })
-      return successData(res ? 200: 500, res, res ? "删除成功": "删除失败")
+          id,
+        },
+      });
+      return successData(res ? 200 : 500, res, res ? "删除成功" : "删除失败");
     } catch (error) {
       errorData(500, error.message, "服务器错误");
-      
     }
   }
 }

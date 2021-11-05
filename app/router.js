@@ -16,4 +16,9 @@ module.exports = (app) => {
     "/records/getRecordsByBId",
     controller.record.getRecordsByBId
   );
+  router.get(
+    "records",
+    "/records/getTotals",
+    controller.record.getTotals
+  );
 };

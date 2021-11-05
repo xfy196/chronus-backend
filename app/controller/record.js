@@ -20,5 +20,9 @@ class RecordController extends Controller {
     );
     this.ctx.body = res;
   }
+  async getTotals(){
+   let res = await this.service.record.getRecordTotal() 
+   this.ctx.body = res
+  }
 }
 module.exports = RecordController;

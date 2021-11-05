@@ -3,11 +3,11 @@ class BookController extends Controller {
   async index() {
     const { pageSize, pageIndex } = this.ctx.query;
     let noPage = false;
-    if (pageSize && pageIndex) {
+    if (!(pageSize && pageIndex)) {
       noPage = true;
     }
     let res = await this.service.book.getBooks(pageSize, pageIndex, noPage);
-    return res;
+    this.ctx.body = res
   }
   async create() {
     const book = this.ctx.request.body;

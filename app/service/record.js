@@ -42,5 +42,21 @@ class RecordService extends Service {
         errorData(500, error.message, "服务器错误")
     }
   }
+  // 获取当前用户的总读书记录
+  async getRecordTotal(){
+    try {
+      let res = await this.service.book.getBooks(1, 10, true)
+      let books = res.data
+      let total = 0;
+      for(let i = 0; i < books.length; i++){
+        total += books[i].dataValues.totalTime
+      }
+      this.ctx.status = 200
+      return successData(200, total, "查询成功")
+    } catch (error) {
+      this.ctx.status = 500
+      errorData(500, error.message, "服务器错误")
+    }
+  }
 }
 module.exports = RecordService;
