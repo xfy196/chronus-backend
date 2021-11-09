@@ -13,7 +13,6 @@ class BookService extends Service {
     try {
       let user = this.ctx.session.user;
       let res = null;
-      let pAll = [];
       if (noPage) {
         res = await this.ctx.model.Book.findAll({ where: { u_id: user.id } });
         for (let i = 0; i < res.length; i++) {
@@ -30,8 +29,8 @@ class BookService extends Service {
       } else {
         res = await this.ctx.model.Book.findAll({
           where: { u_id: user.id },
-          limit: pageSize,
-          offset: (pageIndex - 1) * pageSize,
+          limit: Number(pageSize),
+          offset: Number((pageIndex - 1) * pageSize),
         });
       }
       return successData(res ? 200 : 500, res, res ? "查询成功" : "查询失败");
@@ -64,7 +63,9 @@ class BookService extends Service {
    */
   async updateBook(book) {
     try {
-      let res = this.ctx.model.Book.update(book);
+      let res = this.ctx.model.Book.update(book, {
+        where: {id: book.id}
+      });
       return successData(res ? 200 : 500, res, res ? "修改成功" : "修改失败");
     } catch (error) {
       errorData(500, error.message, "服务器错误");
@@ -95,7 +96,7 @@ class BookService extends Service {
           id
         }
       })
-      let record = await this.ctx.model.Record.findOne({
+      let record = await this.ctx.model.Record.findAll({
         where: {
           b_id: id
         }

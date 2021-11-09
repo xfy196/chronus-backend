@@ -24,25 +24,32 @@ class RecordService extends Service {
       let records = null;
       let book = null
       if (noPage) {
-        book = this.ctx.model.Book.findOne({
+        book = await this.ctx.model.Book.findOne({
           where: {
             id: b_id
           }
         })
         records = await this.ctx.model.Record.findAll({ where: { b_id } });
-      } else {
-        records = await this.ctx.model.Record.findAll({
-          where: { b_id },
-          limit: pageSize,
-          pageIndex: (pageIndex - 1) * pageSize,
-        });
-      }
-      this.ctx.status = 200
+        this.ctx.status = 200
       return successData(
         records ? 200 : 500,
         records,
         records ? "查询成功" : "查询失败"
       );
+      } else {
+        records = await this.ctx.model.Record.findAll({
+          where: { b_id },
+          limit: Number(pageSize),
+          offset: Number((pageIndex - 1) * pageSize),
+        });
+        this.ctx.status = 200
+      return successData(
+        records ? 200 : 500,
+        records,
+        records ? "查询成功" : "查询失败"
+      );
+      }
+      
     } catch (error) {
         this.ctx.status = 500
         errorData(500, error.message, "服务器错误")

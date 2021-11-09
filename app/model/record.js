@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 module.exports = (app) => {
-  const { INTEGER, STRING, BIGINT } = DataTypes;
+  const { INTEGER, STRING, BIGINT, DATE } = DataTypes;
 
   const Record = app.model.define(
     "records",
@@ -8,7 +8,9 @@ module.exports = (app) => {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       time: { type:  BIGINT},
       title: {type: STRING},
-      b_id: {type: BIGINT}
+      b_id: {type: BIGINT},
+      start_time: {type: DATE},
+      end_time: {type: DATE}
     },
     {
       freezeTableName: true,
