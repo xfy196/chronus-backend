@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "./index.js",
+        "src": "egg-scripts start --daemon --title=egg-server-chronus-backend",
         "use": "@vercel/node"
       }
     ],
