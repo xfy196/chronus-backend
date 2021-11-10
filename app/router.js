@@ -12,13 +12,14 @@ module.exports = (app) => {
     "/records/getRecordsByBId",
     controller.record.getRecordsByBId
   );
-  router.resources("users", "/users", controller.user);
-  router.resources("books", "/books", controller.book);
-  router.resources("records", "/reocrds", controller.record);
-  router.post("users", "/users/getToken", controller.user.login);
   router.get(
     "records",
     "/records/getTotals",
     controller.record.getTotals
   );
+  router.resources("users", "/users", controller.user);
+  router.resources("books", "/books", controller.book);
+  router.resources("records", "/records", controller.record);
+  router.post("users", "/users/getToken", controller.user.login);
+  
 };

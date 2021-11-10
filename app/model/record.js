@@ -10,7 +10,7 @@ module.exports = (app) => {
       title: {type: STRING},
       b_id: {type: BIGINT},
       start_time: {type: DATE},
-      end_time: {type: DATE}
+      end_time: {type: DATE},
     },
     {
       freezeTableName: true,

@@ -78,11 +78,26 @@ class BookService extends Service {
    */
   async deleteBookById(id) {
     try {
+      let records = await this.ctx.model.Record.findAll({
+        where: {
+          b_id: id
+        }
+      })
+      for(let i = 0; i < records.length; i++){
+        // 首先先删除与这本相关的记录
+        await this.ctx.model.Record.destroy({
+          where: {
+            id: records[i].id
+          }
+        })
+
+      }
       let res = this.ctx.model.Book.destroy({
         where: {
           id,
         },
       });
+      this.ctx.status = 200
       return successData(res ? 200 : 500, res, res ? "删除成功" : "删除失败");
     } catch (error) {
       errorData(500, error.message, "服务器错误");
