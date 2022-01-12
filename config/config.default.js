@@ -72,7 +72,7 @@ module.exports = (appInfo) => {
   // add your middleware config here
   config.middleware = ["auth", "errorHandler"];
   config.auth = {
-    noAuthUrls: ["/api/users/getToken"],
+    noAuthUrls: ["/api/users/getToken", "/api/common/config"],
   };
   config.errorHandler = {
     enable: true,

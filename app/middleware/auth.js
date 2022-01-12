@@ -34,7 +34,7 @@ module.exports = (options, app) => {
             await next();
           }
         } catch (error) {
-          console.log(error)
+          console.log(error);
           ctx.status = 401;
           ctx.body = {
             code: 401,

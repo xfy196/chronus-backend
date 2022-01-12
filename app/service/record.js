@@ -61,6 +61,7 @@ class RecordService extends Service {
       let books = res.data;
       let total = 0;
       for (let i = 0; i < books.length; i++) {
+        console.log(books[i].dataValues)
         total += books[i].dataValues.totalTime;
       }
       this.ctx.status = 200;
@@ -71,8 +72,18 @@ class RecordService extends Service {
     }
   }
   async addRecord(model) {
-    let res = this.ctx.model.Record.create(model)
-    return successData(res ? 200 : 500, res, res ? "创建成功": "创建失败")
+    let res = this.ctx.model.Record.create(model);
+    this.ctx.model.Book.update(
+      {
+        last_record_time: Date.now(),
+      },
+      {
+        where: {
+          id: model.b_id,
+        },
+      }
+    );
+    return successData(res ? 200 : 500, res, res ? "创建成功" : "创建失败");
   }
 }
 module.exports = RecordService;

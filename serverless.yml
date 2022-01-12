@@ -1,6 +1,6 @@
-component: http
+component: egg
 name: chronus-backend
-stage: prod
+stage: dev
 inputs:
   name: ${name}-${stage}-${app}
   src:
@@ -17,4 +17,10 @@ inputs:
       - http
       - https
     environment: release
+  functionConf: # 函数配置相关
+    timeout: 10 # 超时时间，单位秒
+    memorySize: 128 # 内存大小，单位MB
+    environment: #  环境变量
+      variables: #  环境变量数组
+        NODE_ENV: ${stage}
 app: chronus
