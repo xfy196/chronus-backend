@@ -1,14 +1,14 @@
 component: http
 name: chronus-backend
-stage: dev
+stage: prod
 inputs:
   name: ${name}-${stage}-${app}
   src:
     src: ./
     exclude:
       - .env
+  region: ap-shanghai
   faas:
-    region: ap-shanghai
     runtime: Nodejs12.16
     framework: egg
     name: '${name}'
