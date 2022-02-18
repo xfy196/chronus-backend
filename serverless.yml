@@ -1,6 +1,6 @@
 component: egg
 name: chronus-backend
-stage: dev
+stage: prod
 inputs:
   name: ${name}-${stage}-${app}
   src:

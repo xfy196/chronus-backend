@@ -35,6 +35,7 @@ class UserService extends Service {
             method: "GET",
           }
         );
+        console.log(res)
         if (res.data.errcode) {
           return successData(200, null, "code失效");
         }

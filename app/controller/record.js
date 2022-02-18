@@ -24,7 +24,6 @@ class RecordController extends Controller {
   async create(){
     let body = this.ctx.request.body
     let res = await this.service.record.addRecord(body)
-    console.log(res)
     this.ctx.body = res
   }
   async getTotals(){

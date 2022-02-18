@@ -61,7 +61,6 @@ class RecordService extends Service {
       let books = res.data;
       let total = 0;
       for (let i = 0; i < books.length; i++) {
-        console.log(books[i].dataValues)
         total += books[i].dataValues.totalTime;
       }
       this.ctx.status = 200;

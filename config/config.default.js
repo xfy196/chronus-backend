@@ -57,13 +57,21 @@ module.exports = (appInfo) => {
       },
     },
   });
-  config.sequelize = {
+  config.sequelize = process.env.NODE_ENV === "prod" || process.env.NODE_ENV === "production" ?
+  {
     dialect: "mysql",
     host: "rm-uf60gx1764vjv9946ro.mysql.rds.aliyuncs.com",
     port: 3306,
     database: "db_chronus",
     username: "xfy196",
     password: "591196Qwert",
+  }: {
+    dialect: "mysql",
+    host: "sh-cdb-2m4bqgrw.sql.tencentcdb.com",
+    port: 59108,
+    database: "db_chronus",
+    username: "root",
+    password: "591196qwert",
   };
 
   // use for cookie sign key, should change to your own and keep security
