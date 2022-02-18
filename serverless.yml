@@ -1,4 +1,4 @@
-component: egg
+component: http
 name: chronus-backend
 stage: prod
 inputs:
