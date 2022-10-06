@@ -1,7 +1,3 @@
-/* eslint valid-jsdoc: "off" */
-
-'use strict';
-
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -15,7 +11,7 @@ module.exports = appInfo => {
       csrf: false,
     },
     httpclient: {
-      contentType: 'json',
+      contentType: "json",
       // 是否开启本地 DNS 缓存，默认关闭，开启后有两个特性
       // 1. 所有的 DNS 查询都会默认优先使用缓存的，即使 DNS 查询错误也不影响应用
       // 2. 对同一个域名，在 dnsCacheLookupInterval 的间隔内（默认 10s）只会查询一次
@@ -57,30 +53,32 @@ module.exports = appInfo => {
       },
     },
   });
-  config.sequelize = process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production' ?
-    {
-      dialect: 'mysql',
-      host: 'sh-cdb-2m4bqgrw.sql.tencentcdb.com',
-      port: 59108,
-      database: 'db_chronus',
-      username: 'root',
-      password: '591196qwert',
-    } : {
-      dialect: 'mysql',
-      host: '127.0.0.1',
-      port: 3306,
-      database: 'db_chronus',
-      username: 'root',
-      password: '123456',
-    };
+  config.sequelize =
+    process.env.NODE_ENV === "prod" || process.env.NODE_ENV === "production"
+      ? {
+        dialect: "mysql",
+        host: "sh-cdb-2m4bqgrw.sql.tencentcdb.com",
+        port: 59108,
+        database: "db_chronus",
+        username: "root",
+        password: "591196qwert",
+      }
+      : {
+        dialect: "mysql",
+        host: "127.0.0.1",
+        port: 3306,
+        database: "db_chronus",
+        username: "root",
+        password: "123456",
+      };
 
   // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1624982332864_9406';
+  config.keys = appInfo.name + "_1624982332864_9406";
 
   // add your middleware config here
-  config.middleware = [ 'auth', 'errorHandler' ];
+  config.middleware = [ "auth", "errorHandler" ];
   config.auth = {
-    noAuthUrls: [ '/api/users/getToken', '/api/common/config' ],
+    noAuthUrls: [ "/api/users/getToken", "/api/common/config" ],
   };
   config.errorHandler = {
     enable: true,
