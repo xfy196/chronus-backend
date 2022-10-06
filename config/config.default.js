@@ -84,9 +84,9 @@ module.exports = appInfo => {
   };
   config.errorHandler = {
     enable: true,
-    match(ctx) {
+    match() {
       // 这里可以设置对应规则去匹配，例如只在ios下开启
-      const reg = /iphone|ipad|ipod/i;
+      // const reg = /iphone|ipad|ipod/i;
       return true;
     },
   };

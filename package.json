@@ -7,6 +7,7 @@
     "declarations": true
   },
   "dependencies": {
+    "cross-env": "^7.0.3",
     "egg": "^2.15.1",
     "egg-scripts": "^2.11.0",
     "egg-sequelize": "^6.0.0",
@@ -31,6 +32,7 @@
     "start": "egg-scripts start --daemon --title=egg-server-chronus-backend",
     "stop": "egg-scripts stop --title=egg-server-chronus-backend",
     "dev": "egg-bin dev",
+    "prod": "cross-env NODE_ENV=prod egg-bin dev",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
