@@ -71,7 +71,7 @@ module.exports = appInfo => {
       port: 3306,
       database: 'db_chronus',
       username: 'root',
-      password: '',
+      password: '123456',
     };
 
   // use for cookie sign key, should change to your own and keep security
