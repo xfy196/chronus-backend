@@ -1,3 +1,3 @@
 'use strict';
-const cmd = require('node-cmd');
-cmd.run('npm run prod');
+require('./bin/www');
+
